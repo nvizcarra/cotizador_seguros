@@ -50,10 +50,12 @@ const Error = styled.div`
     padding:1rem;
     width:100%;
     text-align:center;
-    margin: 2rem;
+    margin-bottom: 2rem;
 `;
 
-const Formulario = () => {
+// El parámetro guardarResumen que viene del state definido en App.js
+// Extraigo guardarResumen y una vez realizado, vamos a pasarle el resultadoa guardarResumen
+const Formulario = ({guardarResumen}) => {
 
      const [ datos, guardarDatos ] = useState ({
         marca: '',
@@ -98,8 +100,6 @@ const Formulario = () => {
         // por cada año hay que restar el 3%
         resultado -= (( diferencia * 3 ) * resultado) / 100;
 
-        console.log(resultado);
-
         // Americano vale 15% más sobre la base de 2000
         
         //  Asiatico vale 5%  más sobre la base de 2000
@@ -112,8 +112,17 @@ const Formulario = () => {
         // Completo aumenta 50%
         const incrementoPlan = obtenerPlan(plan);    
         resultado = parseFloat( incrementoPlan * resultado ).toFixed(2);
+        console.log(resultado);
         
         // El siguiente paso es pasar éste resultado al componente principal.
+        
+        
+        // Tras extaer guardarResumen, le paso resultado
+        guardarResumen({
+            cotizacion: resultado,
+            datos
+        });
+        // Luego de este paso, creamos 2 nuevos componentes Resultado.jsx y Resumen.jsx
     }
 
     return (
