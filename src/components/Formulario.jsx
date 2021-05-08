@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 // este import lo voy a usar en la instrucción del evento onSubmit
-import {obtenerDiferenciaModelo} from '../helper';
+import {obtenerDiferenciaModelo, calcularMarca} from '../helper';
 
 
 const Campo = styled.div`
@@ -100,13 +100,17 @@ const Formulario = () => {
 
         console.log(resultado);
 
-        // Amricano 15
+        // Americano vale 15% más sobre la base de 2000
         
-        //  Asiatico 5%
+        //  Asiatico vale 5%  más sobre la base de 2000
 
-        //  Europeo 30%
+        //  Europeo vale 30% más sobre la base de 2000
+        // (marca) viene del formulario
+        resultado = calcularMarca(marca) * resultado;
+
+        console.log(resultado);
     }
-    
+
     return (
         <form
             // Evento onbSubmit. En la documentación lo llaman handleSubmit pero le puedo poner el nombre que quiera.
