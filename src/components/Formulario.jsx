@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
 // este import lo voy a usar en la instrucción del evento onSubmit
-import {obtenerDiferenciaModelo, calcularMarca} from '../helper';
+import {obtenerDiferenciaModelo, calcularMarca, obtenerPlan} from '../helper';
 
 
 const Campo = styled.div`
@@ -108,7 +108,12 @@ const Formulario = () => {
         // (marca) viene del formulario
         resultado = calcularMarca(marca) * resultado;
 
-        console.log(resultado);
+        // Básico aumenta 20%
+        // Completo aumenta 50%
+        const incrementoPlan = obtenerPlan(plan);    
+        resultado = parseFloat( incrementoPlan * resultado ).toFixed(2);
+        
+        // El siguiente paso es pasar éste resultado al componente principal.
     }
 
     return (
