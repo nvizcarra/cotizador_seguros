@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+// este import lo voy a usar en la instrucción del evento onSubmit
+import {obtenerDiferenciaModelo} from '../helper';
+
 
 const Campo = styled.div`
     display: flex;
@@ -77,15 +80,33 @@ const Formulario = () => {
          // la mayoría de las veces es necesario el preventDefault en los formularios.
          e.preventDefault();
 
-         if(marca.trim() === '' || year.trim() === '' || plan.trim() === '') {
+         if(marca.trim() === '' || modelo.trim() === '' || plan.trim() === '') {
              // si el usuario no llena alguno de éstos campos, guardarError = true
              guardarError(true);
              return;
          }
 
          guardarError(false);
-     }
 
+        // Iniciamos con base en modelo 2000
+        let resultado = 2000;
+     
+        // Crear un archivo helper en src
+        // obtener la diferencia por modelos
+        const diferencia = obtenerDiferenciaModelo(modelo);
+
+        // por cada año hay que restar el 3%
+        resultado -= (( diferencia * 3 ) * resultado) / 100;
+
+        console.log(resultado);
+
+        // Amricano 15
+        
+        //  Asiatico 5%
+
+        //  Europeo 30%
+    }
+    
     return (
         <form
             // Evento onbSubmit. En la documentación lo llaman handleSubmit pero le puedo poner el nombre que quiera.
