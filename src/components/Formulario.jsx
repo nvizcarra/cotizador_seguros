@@ -41,13 +41,25 @@ const Boton = styled.button`
     }
 `;
 
+const Error = styled.div`
+    background-color:red;
+    color:white;
+    padding:1rem;
+    width:100%;
+    text-align:center;
+    margin: 2rem;
+`;
+
 const Formulario = () => {
 
-     const [ datos, guardarDatos ] = userState ({
+     const [ datos, guardarDatos ] = useState ({
         marca: '',
         modelo: '',
         plan: ''
      });
+
+     // State para los errores
+     const [error, guardarError ] = useState (false);
 
      // Extraer los valores del state
      const { marca, modelo, plan } = datos;
@@ -60,8 +72,28 @@ const Formulario = () => {
          })
      }
 
+     // cuando el usuario presiona submit
+     const cotizarSeguro = e => {
+         // la mayoría de las veces es necesario el preventDefault en los formularios.
+         e.preventDefault();
+
+         if(marca.trim() === '' || year.trim() === '' || plan.trim() === '') {
+             // si el usuario no llena alguno de éstos campos, guardarError = true
+             guardarError(true);
+             return;
+         }
+
+         guardarError(false);
+     }
+
     return (
-        <form>
+        <form
+            // Evento onbSubmit. En la documentación lo llaman handleSubmit pero le puedo poner el nombre que quiera.
+            onSubmit={cotizarSeguro}
+        >
+
+            { error ? <Error>Todos los campos son obligatorios</Error>  : null}
+
             <Campo>
                 <Label>Marca: </Label>
                 <Select 
@@ -116,7 +148,8 @@ const Formulario = () => {
                 /> Completo
             </Campo>
 
-            <Boton type="button">Cotizar</Boton>
+            {/* type tiene que ser submit, para que funcione el useState  */}
+            <Boton type="submit">Cotizar</Boton>
         </form>
     )
 }
