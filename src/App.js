@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Header from './components/Header';
 import Formulario from './components/Formulario';
 import Resumen from './components/Resumen';
+import Resultado from './components/Resultado';
 // 1° paso importar Emotion Styled
 import styled from '@emotion/styled';
 
@@ -32,7 +33,7 @@ function App() {
   });
 
   // Extraer datos del objeto de arriba
-  const { datos } = resumen;
+  const { cotizacion, datos } = resumen;
   //Ahora estos datos se los pasamos al componente de Resumen
 
   return (
@@ -54,7 +55,11 @@ function App() {
           
           <Resumen 
             datos={datos}
-          /> 
+          />
+
+          <Resultado 
+            cotizacion={cotizacion}
+          />
       </ContenedorFormulario>
     </Contenedor>
   );
