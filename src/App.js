@@ -3,6 +3,7 @@ import Header from './components/Header';
 import Formulario from './components/Formulario';
 import Resumen from './components/Resumen';
 import Resultado from './components/Resultado';
+import Spinner from './components/Spinner';
 // 1° paso importar Emotion Styled
 import styled from '@emotion/styled';
 
@@ -32,6 +33,8 @@ function App() {
     }
   });
 
+  const [ cargando, guardarCargando ] = useState(false);
+
   // Extraer datos del objeto de arriba
   const { cotizacion, datos } = resumen;
   //Ahora estos datos se los pasamos al componente de Resumen
@@ -39,27 +42,24 @@ function App() {
   return (
     // Contenedor
     <Contenedor>
-        <Header 
-          titulo='Cotizador de seguros'
-      />
-    {/* Formulario */}
+      <Header titulo="Cotizador de seguros" />
+      {/* Formulario */}
       <ContenedorFormulario>
-          <Formulario 
-            // paso el modificador de state al formulario
-            guardarResumen={guardarResumen}
-            // el siguiente paso es extraerlo en Formulario.jsx
-          />
+        <Formulario
+          // paso el modificador de state al formulario
+          // el siguiente paso es extraerlo en Formulario.jsx
+          guardarResumen={guardarResumen}
+          // Spinner que voy a pasar al formulario
+          guardarCargando={guardarCargando}
+        />
 
-          {/* Al agregar Resumen, no quiero que aparezca antes de solicitar una cotizacion. Para ello voy a crear  una variable de datos = resumen;. Luego agregar un operador ternario */}
-          
-          
-          <Resumen 
-            datos={datos}
-          />
+        {/* Al agregar Resumen, no quiero que aparezca antes de solicitar una cotizacion. Para ello voy a crear  una variable de datos = resumen;. Luego agregar un operador ternario */}
 
-          <Resultado 
-            cotizacion={cotizacion}
-          />
+        {cargando ? <Spinner /> : null}
+
+        <Resumen datos={datos} />
+
+        {!cargando ? <Resultado cotizacion={cotizacion} /> : null}
       </ContenedorFormulario>
     </Contenedor>
   );

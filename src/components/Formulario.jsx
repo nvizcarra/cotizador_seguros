@@ -55,7 +55,7 @@ const Error = styled.div`
 
 // El parámetro guardarResumen que viene del state definido en App.js
 // Extraigo guardarResumen y una vez realizado, vamos a pasarle el resultadoa guardarResumen
-const Formulario = ({guardarResumen}) => {
+const Formulario = ({guardarResumen, guardarCargando}) => {
 
      const [ datos, guardarDatos ] = useState ({
         marca: '',
@@ -112,16 +112,24 @@ const Formulario = ({guardarResumen}) => {
         // Completo aumenta 50%
         const incrementoPlan = obtenerPlan(plan);    
         resultado = parseFloat( incrementoPlan * resultado ).toFixed(2);
-        console.log(resultado);
+        
         
         // El siguiente paso es pasar éste resultado al componente principal.
         
         
         // Tras extaer guardarResumen, le paso resultado
-        guardarResumen({
-            cotizacion: resultado,
-            datos
-        });
+        guardarCargando(true);
+
+        setTimeout(() => {
+            // Elimina el spinner
+            guardarCargando(false);
+            // Pasa la información al componente principal
+            guardarResumen({
+                cotizacion: resultado,
+                datos
+            });
+        }, 3000);
+        
         // Luego de este paso, creamos 2 nuevos componentes Resultado.jsx y Resumen.jsx
     }
 
