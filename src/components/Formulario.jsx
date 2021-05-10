@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from '@emotion/styled';
+import PropTypes from 'prop-types';
 // este import lo voy a usar en la instrucción del evento onSubmit
 import {obtenerDiferenciaModelo, calcularMarca, obtenerPlan} from '../helper';
 
@@ -125,7 +126,7 @@ const Formulario = ({guardarResumen, guardarCargando}) => {
             guardarCargando(false);
             // Pasa la información al componente principal
             guardarResumen({
-                cotizacion: resultado,
+                cotizacion: Number(resultado),
                 datos
             });
         }, 3000);
@@ -199,6 +200,11 @@ const Formulario = ({guardarResumen, guardarCargando}) => {
             <Boton type="submit">Cotizar</Boton>
         </form>
     )
+}
+
+Formulario.propTypes = {
+    guardarResumen: PropTypes.func.isRequired,
+    guardarCargando: PropTypes.func.isRequired
 }
 
 export default Formulario;
